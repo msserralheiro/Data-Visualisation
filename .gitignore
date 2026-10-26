@@ -1,0 +1,15 @@
+# RStudio / R session files
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+*_cache/
+rsconnect/
+
+# macOS
+.DS_Store
+
+# Data is shared outside git (see README) — keep only the folder
+Data/*
+!Data/.gitkeep

@@ -27,3 +27,18 @@ nypd |>
   arrange(desc(total)) |>
   slice_head(n = 10)
 
+
+# Verify the most frequently reported offence types in the Bronx
+
+nypd |>
+  filter(boro_nm == "BRONX") |>
+  count(ofns_desc, sort = TRUE) |>
+  slice_head(n = 5)
+
+
+# Verify the most frequently reported offence types in Staten Island
+
+nypd |>
+  filter(boro_nm == "STATEN ISLAND") |>
+  count(ofns_desc, sort = TRUE) |>
+  slice_head(n = 5)

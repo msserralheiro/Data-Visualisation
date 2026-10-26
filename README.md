@@ -18,7 +18,7 @@ Visual analysis of NYPD complaint data (2020–2026).
    ```bash
    git clone https://github.com/msserralheiro/Data-Visualisation.git
    ```
-2. Download `nypd_2020_2026.rds` from the shared folder: **<add link here>**
+2. Download `nypd_2020_2026.rds` from the course page on Moodle
    and put it in `Data/` (so the path is `Data/nypd_2020_2026.rds`).
 3. Open `DV_Group_Project.Rproj` in RStudio (this sets the working directory
    so the relative paths in the scripts work).

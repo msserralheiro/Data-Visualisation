@@ -33,9 +33,7 @@ nypd |>
   arrange(desc(total)) |>
   slice_head(n = 10)
 
-
 # Verify the most frequently reported offence types in the Bronx
-
 nypd |>
   filter(boro_nm == "BRONX") |>
   count(ofns_desc, sort = TRUE) |>
@@ -55,8 +53,11 @@ off_bronx
 ggsave("Bronx_Most_Frequent_Reported_Offence_Types.png", off_bronx, width = 7, height = 5, dpi = 300)
 
 
-# Verify the most frequently reported offence types in Staten Island
+off_bronx
 
+ggsave("Bronx_Most_Frequent_Reported_Offence_Types.png", off_bronx, width = 7, height = 5, dpi = 300)
+
+# Verify the most frequently reported offence types in Staten Island
 nypd |>
   filter(boro_nm == "STATEN ISLAND") |>
   count(ofns_desc, sort = TRUE) |>

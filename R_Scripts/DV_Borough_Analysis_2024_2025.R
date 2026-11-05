@@ -1,14 +1,18 @@
 # Data Visualization - Group Project
-# NYPD Complaint Data (2024-2025)
-# Exploratory Analysis: NYC Boroughs
+# Data: NYPD Complaint Data (2020-2026)
+# Analysis period: 2024-2025 
+# The group has decided to analyze two full years of data
 #
-# Research question:
-# How do reported offense patterns vary across
-# New York City's boroughs in 2024 and 2025?
+# Five Borough Analysis
 #
-# Data source: NYPD Complaint Data
-# AI assistance: ChatGPT helped explain the
-# filtering and exploratory analysis steps.
+# Question:
+# How do reported offenses differ across NYC boroughs
+# in 2024 and 2025?
+#
+# AI assistance: ChatGPT used to help develop and
+# explain parts of the R code, charts, and comments.
+# The analysis uses methods discussed in class.
+
 
 library(dplyr)
 library(ggplot2)
@@ -21,11 +25,10 @@ nypd_2024_2025 <- nypd |>
   filter(occurred_on >= as.Date("2024-01-01") &
            occurred_on < as.Date("2026-01-01"))
 
-# --------------------------------------------------
-# Chart 1 - BEFORE: Total complaints by borough
-# --------------------------------------------------
-# Initial exploratory visualization (2024-2025)
-# Excludes records with missing borough information.
+### Chart 1 - BEFORE: Total complaints by borough
+
+# First version of the chart using 2024-2025 data
+# Remove records where the borough is missing
 
 nypd_2024_2025 |>
   filter(!is.na(boro_nm)) |>
@@ -33,10 +36,9 @@ nypd_2024_2025 |>
   ggplot(aes(n, reorder(boro_nm, n))) +
   geom_col()
 
-# --------------------------------------------------
-# Population Data and Calculations
-# --------------------------------------------------
-# Population source: 2020 US Census (NYC boroughs)
+### Population Data and Calculations
+
+# Population source: 2020 US Census - NYC boroughs
 # Calculate 2024-2025 complaints per 1,000 residents.
 
 pop_2020 <- data.frame(
@@ -55,7 +57,7 @@ by_boro <- nypd_2024_2025 |>
   left_join(pop_2020, by = "boro_nm") |>
   mutate(per_1000 = n / pop * 1000)
 
-# Compare borough rankings
+## Compare borough rankings
 
 # Ranking by total complaints
 by_boro |>
@@ -65,19 +67,16 @@ by_boro |>
 by_boro |>
   arrange(desc(per_1000))
 
-# --------------------------------------------------
-# Chart 2 - BEFORE: Population-adjusted complaints
-# --------------------------------------------------
-# Initial exploratory visualization (2024-2025)
-# Population denominator: 2020 US Census.
+### Chart 2 - BEFORE: Population-adjusted complaints
+
+# First version of the chart using 2024-2025 data
+# Population figures from the 2020 US Census
 
 by_boro |>
   ggplot(aes(per_1000, reorder(boro_nm, per_1000))) +
   geom_col()
 
-# --------------------------------------------------
-# Chart 1 - AFTER: Improved total complaints by borough
-# --------------------------------------------------
+### Chart 1 - AFTER: Improved total complaints by borough
 
 nypd_2024_2025 |>
   filter(!is.na(boro_nm)) |>
@@ -97,16 +96,15 @@ nypd_2024_2025 |>
     title = "Brooklyn recorded the most NYPD complaints in 2024–2025",
     x = "Number of reported complaints",
     y = NULL,
-    caption = "Source: NYPD Complaint Data | Occurrence dates: 2024–2025"
+    caption = "Source: NYPD Complaint Data | Complaints occurring in 2024–2025"
   ) +
   theme_minimal() +
   theme(
     panel.grid = element_blank()
   )
 
-# --------------------------------------------------
-# Chart 2 - AFTER: Population-adjusted complaints
-# --------------------------------------------------
+### Chart 2 - AFTER: Population-adjusted complaints
+
 # 2024-2025 complaints per 1,000 residents
 # Population denominator: 2020 US Census
 
@@ -129,29 +127,31 @@ by_boro |>
     title = "The Bronx had the most complaints per 1,000 residents",
     x = "2024–2025 complaints per 1,000 residents",
     y = NULL,
-    caption = "Sources: NYPD Complaint Data (2024–2025) | 2020 US Census population"
+    caption = "Sources: NYPD complaints occurring in 2024–2025 | 2020 US Census population"
   ) +
   theme_minimal() +
   theme(
     panel.grid = element_blank()
   )
 
-# Preliminary findings
-#
-# Chart 1: Brooklyn recorded the highest total number
-# of NYPD complaints in 2024-2025 (319,779).
-#
-# Chart 2: After adjusting for borough population,
-# the Bronx had the highest number of complaints
-# (172.9 per 1,000 residents), followed by Manhattan
-# (161.7 per 1,000 residents).
-#
-# Population-adjusted values represent cumulative
-# complaints over two years, using 2020 Census
-# population figures as the denominator.
-#
-# These descriptive results do not establish
-# individual crime risk or explain why boroughs differ.
+### Preliminary Findings
+
+# Chart 1: Brooklyn had the highest total number of
+# complaints in 2024-2025 - 319,779.
+
+# Chart 2: After adjusting for population, the Bronx
+# had the highest number of complaints per 1,000
+# residents - 172.9, followed by Manhattan - 161.7.
+
+# Population figures are from the 2020 US Census.
+# The results cover two years instead of one year.
+
+# Complaint counts don't necessarily indicate
+# individual crime risk.
+
+
+
+# -------------------------------------------------------------------------
 
 
 

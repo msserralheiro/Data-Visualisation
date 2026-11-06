@@ -10,8 +10,7 @@ library(ggplot2)
 
 ## TOP PLACES - WHY NYC SUBWAY 
 # Names of the 6 most frequent places types
-top_places <- nypd |> count(prem_typ_desc, sort = TRUE) |>
-  slice_head(n = 6)
+top_places <- nypd |> count(prem_typ_desc, sort = TRUE) |> slice_head(n = 6)
 
 # Reports per year for each place
 place_year <- nypd |>
@@ -19,8 +18,7 @@ place_year <- nypd |>
   count(report_year, prem_typ_desc)
 
 # Subway complaints per year
-subway_year <- place_year |>
-  filter(prem_typ_desc == "TRANSIT - NYC SUBWAY")
+subway_year <- place_year |> filter(prem_typ_desc == "TRANSIT - NYC SUBWAY")
 
 library(forcats)
 
@@ -42,15 +40,14 @@ p1 <- ggplot(place_year_plot, aes(x = report_year, y = n, color = prem_typ_desc)
     linewidth = 2) +
   labs(x = "Year reported", y = "Number of complaints", color = "Places",
        title = "Top 6 places with the most complaints between 2020 and 2025",
-       subtitle = "Street and NYC Subway highlighted: the two premises types analysed in this project
-2026 is excluded because its data ends in June",
-       caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2020 to June 2026)") +
+       subtitle = "2026 excluded (its data ends in June)",
+       caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2020 to December 2025)") +
   scale_x_continuous(breaks = 2020:2025) + 
   scale_y_continuous(labels = scales::label_comma()) +
-  theme_minimal(base_size = 13) +
+  theme_minimal(base_size = 12) +
   theme(plot.caption = element_text(hjust = 0), 
         plot.title = element_text(face = "bold"))
-
+p1
 ggsave("Figures/Top6Places_Streets_Subway.png", 
        plot = p1, width = 10, height = 6, dpi = 300)
 
@@ -67,7 +64,7 @@ subway_month <- subway_month |>
 
 # Heatmap of number of complaints in the NYC Subway per month over the years
 p2 <- ggplot(subway_month, aes(factor(report_year), factor(month), fill = n)) + 
-  geom_tile(colour = "white") +
+  geom_tile() +
   scale_y_discrete(limits = rev) +
   labs(title = "Subway complaints increased sharply since 2024",
        subtitle = "Complaints per month, by report year (2026 data ends in June)", 
@@ -83,15 +80,10 @@ p2
 ggsave("Figures/HeatMap_Subway_Complaints.png", 
        plot = p2, width = 10, height = 6, dpi = 300)
 
-# Legend of the Figure 2: 
-# Monthly subway complaints, 2020 to June 2026. 
-
-# The heatmap suggested two jumps between 2023, 2024 and between 2024 and 2025 
-# and raised the question of seasonality.
-
 
 ## EDA ON NYC SUBWAY OCCURENCES PER WEEKDAY AND HOUR
-## Question: "On which days and at what hours are subway complaints concentrated (between 2024 and 2026)?"
+## Question: "On which days and at what hours are subway complaints 
+##           concentrated (between 2024 and 2026)?"
 subway_data <- nypd |> filter(prem_typ_desc == "TRANSIT - NYC SUBWAY",
                               report_year >= 2024) |>
   mutate(wday = factor(wday, levels = levels(wday), 
@@ -117,12 +109,13 @@ p3 <- subway_data |> count(wday, hour) |>
   geom_tile() +
   scale_y_discrete(limits = rev) + scale_x_continuous(breaks = 0:23, expand = c(0, 0)) + 
   scale_fill_gradient(low = "#9ecae1", high = "#08306b") +
-  labs(title = "One in five complaints falls in under 10% of the total weekly hours.",
-       subtitle = "Tuesday to Friday, 14:00–17:59. Subway complaints by weekday and hour of occurrence",
+  labs(title = "1 in 5 complaints occurs Tuesday to Friday, 14:00–17:59",
+       subtitle = "Subway complaints by weekday and hour of occurrence",
        x = "Hour of the day", y = NULL, fill = "Number of Complaints",
        caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)") +
-  theme_minimal(base_size = 13) + 
-  theme(panel.grid = element_blank(), plot.caption = element_text(hjust = 0), 
+  theme_minimal(base_size = 12) + 
+  theme(panel.grid = element_blank(), 
+        plot.caption = element_text(hjust = 0), 
         plot.title = element_text(face = "bold"))
 p3
 
@@ -159,12 +152,12 @@ p4 <- ggplot(top5_stations, aes(x = n, y = reorder(station_name, n))) +
                      levels = (subway_data |> count(boro_nm, sort = TRUE))$boro_nm), 
              scales = "free_y", ncol = 1) +
   scale_x_continuous(expand = expansion(mult = c(0, 0.20))) +
-  labs(title = "LALALALALA",
+  labs(title = "Top 5 Subway Stations per Borough",
        x = NULL, y = NULL,
        caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)") +
   theme_minimal(base_size = 12) + 
   theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
-        strip.text = element_text(face = "bold", size = 13),
+        strip.text = element_text(face = "bold", size = 12),
         axis.text.y = element_text(size = 10),
         panel.grid.minor.x = element_blank(),
         panel.grid.major.y = element_blank(),

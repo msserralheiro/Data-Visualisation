@@ -7,7 +7,7 @@
 #
 # Question:
 # How do reported offenses differ across NYC boroughs
-# in 2024 and 2026?
+# in January 2024 to June 2026”?
 #
 # AI assistance: ChatGPT used to help develop and
 # explain parts of the R code, charts, and comments.
@@ -23,7 +23,7 @@ library(ggplot2)
 # Select complaints occurring in 2024 and 2026
 nypd_2024_2026 <- nypd |>
   filter(occurred_on >= as.Date("2024-01-01") &
-           occurred_on < as.Date("2026-12-01"))
+           occurred_on < as.Date("2026-07-01"))
 
 ### Chart 1 - BEFORE: Total complaints by borough
 
@@ -55,7 +55,7 @@ pop_2020 <- data.frame(
 # Combine borough complaint counts with 2020 Census population
 # Calculate two-year complaints per 1,000 residents
 
-by_boro <- nypd_2024_2025 |>
+by_boro <- nypd_2024_2026 |>
   filter(!is.na(boro_nm)) |>
   count(boro_nm) |>
   left_join(pop_2020, by = "boro_nm") |>
@@ -128,7 +128,7 @@ Borough_Complaints_Per_1000_Improved <-
   labs(title = "The Bronx reported the most NYPD complaints per 1,000 residents",
     x = "Complaints per 1,000 residents",
     y = NULL,
-    caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026") +
+    caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)") +
   theme_minimal(base_size = 12) +
   theme(panel.grid = element_blank(),
         plot.caption = element_text(hjust = 0), 
@@ -152,3 +152,4 @@ ggsave("Figures/Borough_Complaints_Per_1000_Improved.png",
 
 # Complaint counts don't necessarily indicate
 # individual crime risk.
+

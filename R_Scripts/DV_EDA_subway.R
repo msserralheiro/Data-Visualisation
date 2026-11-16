@@ -52,23 +52,28 @@ ggsave("Figures/Top6Places_Streets_Subway.png",
        plot = p1, width = 10, height = 6, dpi = 300)
 
 
-## EDA ON NYC SUBWAY OCCURENCES PER MONTH
-# Table with offenses occurrenced in the subway per month per year 
+## EDA ON NYC SUBWAY OCCURRENCES PER MONTH OF OCCURRENCE
+# Table with offenses occurred in the subway per month per year 
 subway_month <- nypd |>
-  filter(prem_typ_desc == "TRANSIT - NYC SUBWAY") |>
-  mutate(month = as.integer(format(reported_on, "%m"))) |>
+  filter(prem_typ_desc == "TRANSIT - NYC SUBWAY",
+         as.integer(format(occurred_on, "%Y")) == report_year) |>
+  mutate(month = as.integer(format(occurred_on, "%m"))) |>
   count(report_year, month)
 # Convert month numbers into an ordered factor with names (Jan, Feb, ...)
 subway_month <- subway_month |>
   mutate(month = factor(month, levels = 1:12, labels = month.abb))
+
+nypd |>
+  filter(prem_typ_desc == "TRANSIT - NYC SUBWAY") |>
+  summarise(share_dropped = mean(as.integer(format(occurred_on, "%Y")) != report_year))
 
 # Heatmap of number of complaints in the NYC Subway per month over the years
 p2 <- ggplot(subway_month, aes(factor(report_year), factor(month), fill = n)) + 
   geom_tile() +
   scale_y_discrete(limits = rev) +
   labs(title = "Subway complaints increased sharply since 2024",
-       subtitle = "Complaints per month, by report year (2026 data ends in June)", 
-       x = "Year reported", y = "Month", fill = "Number of Complaints",
+       subtitle = "Complaints per month of occurrence, by report year (2026 data ends in June)", 
+       x = "Year reported", y = "Month of occurrence", fill = "Number of Complaints",
        caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2020 to June 2026)") +
   scale_fill_gradient(low = "#9ecae1", high = "#08306b") + 
   theme_minimal(base_size = 12) + 

@@ -106,7 +106,7 @@ plot_severity_time <- ggplot(severity_time, aes(x = report_year, y = n)) +
   scale_y_continuous(labels = label_comma()) +
   facet_wrap(~ law_cat_cd, scales = "free_y", ncol = 3) +
   labs(
-    title = "How complaint severity has changed since 2024",
+    title = "How complaint severity has changed over time",
     subtitle = "2026 excluded (partial year)",
     x = "Year", y = "Number of complaints",
     caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)"

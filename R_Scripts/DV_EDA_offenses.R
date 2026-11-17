@@ -121,6 +121,7 @@ ggsave("Figures/Offense_Time.png", plot_severity_time, width = 10, height = 6, d
 
 
 # 4. Top offense types by hour of day
+top6_off <- top_offenses |> slice_head(n = 6) |> pull(ofns_desc) |> as.character()
 
 offense_hour <- nypd |>
   filter(report_year >= 2024, ofns_desc %in% top6_off, !is.na(hour)) |>

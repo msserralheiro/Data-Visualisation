@@ -13,3 +13,7 @@ rsconnect/
 # Data is shared outside git (see README) — keep only the folder
 Data/*
 !Data/.gitkeep
+
+# Local R/plotly artefacts
+.RDataTmp
+lib/

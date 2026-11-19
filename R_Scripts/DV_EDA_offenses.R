@@ -144,3 +144,4 @@ plot_offense_hour <- ggplot(offense_hour, aes(x = hour, y = n)) +
 
 plot_offense_hour
 ggsave("Figures/Offense_By_Hour.png", plot_offense_hour, width = 10, height = 6, dpi = 300)
+

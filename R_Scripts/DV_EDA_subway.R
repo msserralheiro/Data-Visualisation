@@ -231,13 +231,12 @@ p4_shared <- ggplot(shared_bars, aes(x = n, y = reorder(station_name, n))) +
        x = NULL, y = NULL,
        caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)") +
   theme_minimal(base_size = 12) + 
-  theme(plot.title = element_text(size = 12, face = "bold"),
+  theme(plot.title = element_text(size = 10, face = "bold"),
         strip.text = element_text(face = "bold", size = 9),
-        axis.text.y = element_text(size = 8),
+        axis.text.y = element_text(size = 7),
         panel.grid.minor.x = element_blank(),
         panel.grid.major.y = element_blank(),
         plot.caption = element_text(hjust = 0))
-p4_shared
 
 # Subway complaints at the top 5 stations per borough, by hour of occurrence
 station_hour <- subway_data |>
@@ -275,17 +274,23 @@ p5 <- ggplot(shared_lines, aes(x = hour, y = share)) +
   theme_minimal(base_size = 12) +
   theme(panel.grid.minor.x = element_blank(),
         plot.caption = element_text(hjust = 0),
-        plot.title = element_text(size = 12, face = "bold"))
+        plot.title = element_text(size = 10, face = "bold"))
 
 # Interactive barplot
-bars_inter <- ggplotly(p4_shared, height = 800) |> highlight(color = "#E8792F") |>
+bars_inter <- ggplotly(p4_shared, height = 700) |> highlight(color = "#E8792F") |>
   style(hoverinfo = "none")
 
 # Interactive line plot
-lines_inter <- ggplotly(p5, tooltip = "text", height = 800) |>
+lines_inter <- ggplotly(p5, tooltip = "text", height = 700) |>
   highlight(color = "#E8792F", selected = attrs_selected(line = list(width = 3)))
 
 # Put both interactive charts together
-final_inter <- bscols(widths = c(5, 7), bars_inter, lines_inter)
+final_inter <- htmltools::tagList(htmltools::tags$h3("Clicking a station highlights its hourly profile 
+                                                    against the whole subway complaints (black line), 
+                                                    revealing different peaks and patterns in
+                                                    important stations."),   # title
+                                  htmltools::tags$p("Click on bar/line to highlight and
+                                                    double-click to reset."),
+                                  bscols(widths = c(5, 7), bars_inter, lines_inter))
 
-htmltools::save_html(final_inter, "lib/interactive_substations_hourly.html")
+htmltools::save_html(final_inter, "Figures/interactive_substations_hourly.html")

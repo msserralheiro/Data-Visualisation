@@ -16,4 +16,4 @@ Data/*
 
 # Local R/plotly artefacts
 .RDataTmp
-lib/
+/lib/

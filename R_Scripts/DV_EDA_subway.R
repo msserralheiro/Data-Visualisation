@@ -215,29 +215,6 @@ library(tidyr)
 library(plotly)
 library(crosstalk)
 
-# SharedData links both plots: rows with the same key (borough + station) are 
-# highlighted together across plots in the same group
-shared_bars  <- SharedData$new(top5_stations, key = ~paste(boro_nm, station_name), group = "stations")
-shared_lines <- SharedData$new(station_hour,  key = ~paste(boro_nm, station_name), group = "stations")
-
-p4_shared <- ggplot(shared_bars, aes(x = n, y = reorder(station_name, n))) +
-  geom_col(fill = "grey", width = 0.65) +
-  geom_text(aes(label = scales::comma(n)), hjust = -0.1, size = 3) +
-  facet_wrap(~factor(boro_nm, 
-                     levels = (subway_data |> count(boro_nm, sort = TRUE))$boro_nm), 
-             scales = "free_y", ncol = 1) +
-  scale_x_continuous(expand = expansion(mult = c(0, 0.20))) +
-  labs(title = "Top 5 Subway Stations per Borough",
-       x = NULL, y = NULL,
-       caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)") +
-  theme_minimal(base_size = 12) + 
-  theme(plot.title = element_text(size = 10, face = "bold"),
-        strip.text = element_text(face = "bold", size = 9),
-        axis.text.y = element_text(size = 7),
-        panel.grid.minor.x = element_blank(),
-        panel.grid.major.y = element_blank(),
-        plot.caption = element_text(hjust = 0))
-
 # Subway complaints at the top 5 stations per borough, by hour of occurrence
 station_hour <- subway_data |>
   semi_join(top5_stations, by = c("boro_nm", "station_name")) |>
@@ -253,6 +230,29 @@ subway_hour <- subway_data |>
   count(hour) |>
   mutate(share = n / sum(n))
 
+# SharedData links both plots: rows with the same key (borough + station) are 
+# highlighted together across plots in the same group
+shared_bars  <- SharedData$new(top5_stations, key = ~paste(boro_nm, station_name), group = "stations")
+shared_lines <- SharedData$new(station_hour,  key = ~paste(boro_nm, station_name), group = "stations")
+
+p4_shared <- ggplot(shared_bars, aes(x = n, y = reorder(station_name, n))) +
+  geom_col(fill = "grey", width = 0.65) +
+  geom_text(aes(label = scales::comma(n)), nudge_x = 150, size = 3) +
+  facet_wrap(~factor(boro_nm, 
+                     levels = (subway_data |> count(boro_nm, sort = TRUE))$boro_nm), 
+             scales = "free_y", ncol = 1) +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.20))) +
+  labs(title = "Top 5 Subway Stations per Borough",
+       x = NULL, y = NULL,
+       caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)") +
+  theme_minimal(base_size = 12) + 
+  theme(plot.title = element_text(size = 11, face = "bold"),
+        strip.text = element_text(face = "bold", size = 9),
+        axis.text.y = element_text(size = 7),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        plot.caption = element_text(hjust = 0))
+
 # Hourly profile of the top 5 stations per borough vs all subway
 p5 <- ggplot(shared_lines, aes(x = hour, y = share)) +
   # one grey line per station (a station = borough + name)
@@ -267,14 +267,14 @@ p5 <- ggplot(shared_lines, aes(x = hour, y = share)) +
   coord_cartesian(clip = "off") +
   scale_x_continuous(breaks = 0:23, expand = c(0, 0)) +
   scale_y_continuous(labels = scales::label_percent(), limits = c(0, NA)) +
-  labs(title = "Most of the busiest stations follow the afternoon peak, but a few do not",
+  labs(title = "Share of each station’s complaints by hour of occurrence",
        subtitle = "Share of each station’s complaints by hour of occurrence",
        x = "Hour of the day", y = "Percentage of subway complaints per station",
        caption = "Data: NYPD Complaint Data, NYC Open Data (complaints reported from January 2024 to June 2026)") +
   theme_minimal(base_size = 12) +
   theme(panel.grid.minor.x = element_blank(),
         plot.caption = element_text(hjust = 0),
-        plot.title = element_text(size = 10, face = "bold"))
+        plot.title = element_text(size = 11, face = "bold"))
 
 # Interactive barplot
 bars_inter <- ggplotly(p4_shared, height = 700) |> highlight(color = "#E8792F") |>
@@ -285,12 +285,17 @@ lines_inter <- ggplotly(p5, tooltip = "text", height = 700) |>
   highlight(color = "#E8792F", selected = attrs_selected(line = list(width = 3)))
 
 # Put both interactive charts together
-final_inter <- htmltools::tagList(htmltools::tags$h3("Clicking a station highlights its hourly profile 
-                                                    against the whole subway complaints (black line), 
-                                                    revealing different peaks and patterns in
-                                                    important stations."),   # title
-                                  htmltools::tags$p("Click on bar/line to highlight and
-                                                    double-click to reset."),
-                                  bscols(widths = c(5, 7), bars_inter, lines_inter))
+final_inter <- htmltools::tagList(htmltools::tags$h3("Clicking a station compares its hourly profile 
+                                                    with all subway complaints (black line), 
+                                                    revealing that many of the busiest stations 
+                                                    have their own peaks.", 
+                                                     style = "font-family: sans-serif;"),
+                                  htmltools::tags$p("Instructions: Click on a bar or a line to highlight
+                                                    a station and double-click to reset.", 
+                                                    style = "font-family: sans-serif;"),
+                                  bscols(widths = c(5, 7), bars_inter, lines_inter),
+                                  htmltools::tags$p("Data: NYPD Complaint Data, NYC Open Data 
+                                                    (complaints reported from January 2024 to June 2026)",
+                                                    style = "font-family: sans-serif; font-size: 13px; color: grey;"))
 
 htmltools::save_html(final_inter, "Figures/interactive_substations_hourly.html")

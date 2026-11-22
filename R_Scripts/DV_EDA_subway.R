@@ -48,7 +48,7 @@ p1 <- ggplot(place_year_plot, aes(x = report_year, y = n, color = prem_typ_desc)
   theme(plot.caption = element_text(hjust = 0), 
         plot.title = element_text(face = "bold"))
 p1
-ggsave("Figures/Top6Places_Streets_Subway.png", 
+ggsave("Figures/EDA/Top6Places_Streets_Subway.png", 
        plot = p1, width = 10, height = 6, dpi = 300)
 
 
@@ -82,7 +82,7 @@ p2 <- ggplot(subway_month, aes(factor(report_year), factor(month), fill = n)) +
         plot.title = element_text(face = "bold"))
 p2
 
-ggsave("Figures/HeatMap_Subway_Complaints.png", 
+ggsave("Figures/EDA/HeatMap_Subway_Complaints.png", 
        plot = p2, width = 10, height = 6, dpi = 300)
 
 
@@ -124,7 +124,7 @@ p3 <- subway_data |> count(wday, hour) |>
         plot.title = element_text(face = "bold"))
 p3
 
-ggsave("Figures/HeatMap_Subway_Complaints_hour_wday.png", 
+ggsave("Figures/EDA/HeatMap_Subway_Complaints_hour_wday.png", 
        plot = p3, width = 10, height = 6, dpi = 300)
 
 ## Question: "At what hours are subway complaints concentrated?"
@@ -143,7 +143,7 @@ p3_hour <- subway_data |> count(hour) |>
         panel.grid.minor.x = element_blank(),
         plot.title = element_text(face = "bold"))
 p3_hour
-ggsave("Figures/Subway_Complaints_hour.png", 
+ggsave("Figures/EDA/Subway_Complaints_hour.png", 
        plot = p3_hour, width = 10, height = 6, dpi = 300)
 
 p3_hour_percentage <- subway_data |> 
@@ -206,7 +206,7 @@ p4 <- ggplot(top5_stations, aes(x = n, y = reorder(station_name, n))) +
         plot.caption = element_text(hjust = 0))
 p4
 
-ggsave("Figures/Top5_Stations_per_Borough.png", 
+ggsave("Figures/EDA/Top5_Stations_per_Borough.png", 
        plot = p4, width = 10, height = 14, dpi = 300)
 
 
@@ -298,4 +298,4 @@ final_inter <- htmltools::tagList(htmltools::tags$h3("Clicking a station compare
                                                     (complaints reported from January 2024 to June 2026)",
                                                     style = "font-family: sans-serif; font-size: 13px; color: grey;"))
 
-htmltools::save_html(final_inter, "Figures/interactive_substations_hourly.html")
+htmltools::save_html(final_inter, "Figures/Nov22_ProgressCheck/Interactive/interactive_substations_hourly.html")

@@ -94,7 +94,7 @@ p_monthly
 # Step 6 - save monthly complaint chart
 
 ggsave(
-  filename = "Figures/Nov20_ProgressCheck/Monthly_Borough_Complaints.png",
+  filename = "Figures/Nov22_ProgressCheck/Temporal_Patterns/Monthly_Borough_Complaints.png",
   plot = p_monthly,
   width = 12,
   height = 6,
@@ -157,7 +157,7 @@ p_monthly_pop
 # Step 11 - save monthly population-adjusted chart
 
 ggsave(
-  filename = "Figures/Nov20_ProgressCheck/Monthly_Borough_Complaints_Per_1000.png",
+  filename = "Figures/Nov22_ProgressCheck/Temporal_Patterns/Monthly_Borough_Complaints_Per_1000.png",
   plot = p_monthly_pop,
   width = 12,
   height = 6,
@@ -199,7 +199,7 @@ p_monthly_pop_interactive
 
 htmlwidgets::saveWidget(
   p_monthly_interactive,
-  file = "Figures/Nov20_ProgressCheck/Monthly_Borough_Complaints.html",
+  file = "Figures/Nov22_ProgressCheck/Temporal_Patterns/Monthly_Borough_Complaints.html",
   selfcontained = TRUE
 )
 
@@ -207,7 +207,7 @@ htmlwidgets::saveWidget(
 
 htmlwidgets::saveWidget(
   p_monthly_pop_interactive,
-  file = "Figures/Nov20_ProgressCheck/Monthly_Borough_Complaints_Per_1000.html",
+  file = "Figures/Nov22_ProgressCheck/Temporal_Patterns/Monthly_Borough_Complaints_Per_1000.html",
   selfcontained = TRUE
 )
 
@@ -299,7 +299,7 @@ p_daily_comparison
 # Step 21 - save average daily complaint comparison chart
 
 ggsave(
-  filename = "Figures/Nov20_ProgressCheck/Average_Daily_Complaints_Jan_Jun.png",
+  filename = "Figures/Nov22_ProgressCheck/Temporal_Patterns/Average_Daily_Complaints_Jan_Jun.png",
   plot = p_daily_comparison,
   width = 12,
   height = 7,
@@ -389,7 +389,7 @@ p_hourly
 # Step 24 - save hourly complaint chart
 
 ggsave(
-  filename = "Figures/Nov20_ProgressCheck/Hourly_Borough_Complaints.png",
+  filename = "Figures/Nov22_ProgressCheck/Temporal_Patterns/Hourly_Borough_Complaints.png",
   plot = p_hourly,
   width = 12,
   height = 6,
@@ -406,6 +406,6 @@ p_hourly_interactive
 
 htmlwidgets::saveWidget(
   p_hourly_interactive,
-  file = "Figures/Nov20_ProgressCheck/Hourly_Borough_Complaints.html",
+  file = "Figures/Nov22_ProgressCheck/Temporal_Patterns/Hourly_Borough_Complaints.html",
   selfcontained = TRUE
 )

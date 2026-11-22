@@ -39,7 +39,7 @@ offense_tbl_formatted <- offense_by_severity |>
 tbl_grob <- tableGrob(offense_tbl_formatted, rows = NULL,
                       theme = ttheme_minimal(base_size = 9))
 
-ggsave("Figures/Offense_Table.png", tbl_grob, width = 10, height = 6, dpi = 300)
+ggsave("Figures/EDA/Offense_Table.png", tbl_grob, width = 10, height = 6, dpi = 300)
 
 severity <- nypd |>
   filter(report_year >= 2024, !is.na(law_cat_cd)) |>
@@ -63,7 +63,7 @@ plot_severity <- ggplot(severity, aes(x = law_cat_cd, y = n)) +
         plot.title = element_text(face = "bold"))
 
 plot_severity
-ggsave("Figures/Offense_Severity_Breakdown.png", plot_severity, width = 10, height = 6, dpi = 300)
+ggsave("Figures/EDA/Offense_Severity_Breakdown.png", plot_severity, width = 10, height = 6, dpi = 300)
 
 # 2. Top offense types
 top_offenses <- nypd |>
@@ -90,7 +90,7 @@ plot_top_offenses <- ggplot(top_offenses, aes(x = n, y = ofns_desc,
         plot.title = element_text(face = "bold"))
 
 plot_top_offenses
-ggsave("Figures/Offense_Types.png", plot_top_offenses, width = 10, height = 6, dpi = 300)
+ggsave("Figures/EDA/Offense_Types.png", plot_top_offenses, width = 10, height = 6, dpi = 300)
 
 
 # 3.Severity trend over time
@@ -117,7 +117,7 @@ plot_severity_time <- ggplot(severity_time, aes(x = report_year, y = n)) +
         plot.title = element_text(face = "bold"))
 
 plot_severity_time
-ggsave("Figures/Offense_Time.png", plot_severity_time, width = 10, height = 6, dpi = 300)
+ggsave("Figures/EDA/Offense_Time.png", plot_severity_time, width = 10, height = 6, dpi = 300)
 
 
 # 4. Top offense types by hour of day
@@ -143,5 +143,5 @@ plot_offense_hour <- ggplot(offense_hour, aes(x = hour, y = n)) +
         plot.title = element_text(face = "bold"))
 
 plot_offense_hour
-ggsave("Figures/Offense_By_Hour.png", plot_offense_hour, width = 10, height = 6, dpi = 300)
+ggsave("Figures/EDA/Offense_By_Hour.png", plot_offense_hour, width = 10, height = 6, dpi = 300)
 

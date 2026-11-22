@@ -38,7 +38,7 @@ Borough_Complaints_2024_2026_Exploratory <-
   geom_col()
 Borough_Complaints_2024_2026_Exploratory
 
-ggsave("Figures/Borough_Complaints_2024_2026_Exploratory.png", 
+ggsave("Figures/EDA/Borough_Complaints_2024_2026_Exploratory.png", 
               plot = Borough_Complaints_2024_2026_Exploratory, width = 10, height = 6, dpi = 300)
 
 ### Population Data and Calculations
@@ -82,7 +82,7 @@ Borough_Complaints_Per_1000_Exploratory <-
   geom_col()
 Borough_Complaints_Per_1000_Exploratory
 
-ggsave("Figures/Borough_Complaints_Per_1000_Exploratory.png", 
+ggsave("Figures/EDA/Borough_Complaints_Per_1000_Exploratory.png", 
        plot = Borough_Complaints_Per_1000_Exploratory, width = 10, height = 6, dpi = 300)
 
 ### Chart 1 - AFTER: Improved total complaints by borough
@@ -107,7 +107,7 @@ Borough_Complaints_2024_2026_Improved <-
         plot.title = element_text(face = "bold"))
 Borough_Complaints_2024_2026_Improved
 
-ggsave("Figures/Borough_Complaints_2024_2026_Improved.png", 
+ggsave("Figures/EDA/Borough_Complaints_2024_2026_Improved.png", 
        plot = Borough_Complaints_2024_2026_Improved, width = 10, height = 6, dpi = 300)
 
 
@@ -135,7 +135,7 @@ Borough_Complaints_Per_1000_Improved <-
         plot.title = element_text(face = "bold"))
 Borough_Complaints_Per_1000_Improved
 
-ggsave("Figures/Borough_Complaints_Per_1000_Improved.png", 
+ggsave("Figures/EDA/Borough_Complaints_Per_1000_Improved.png", 
        plot = Borough_Complaints_Per_1000_Improved, width = 10, height = 6, dpi = 300)
 
 ### Preliminary Findings

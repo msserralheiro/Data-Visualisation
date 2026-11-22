@@ -56,7 +56,7 @@ plot_occurrence <- borough_occurrence |>
 plot_occurrence
 
 ggsave(
-  "Figures/Borough_Year_Comparison_Occurrence.png",
+  "Figures/EDA/Borough_Year_Comparison_Occurrence.png",
   plot_occurrence, width = 10, height = 5, dpi = 300
 )
 
@@ -94,7 +94,7 @@ plot_report <- borough_report |>
 plot_report
 
 ggsave(
-  "Figures/Borough_Year_Comparison_Report.png",
+  "Figures/EDA/Borough_Year_Comparison_Report.png",
   plot_report, width = 10, height = 5, dpi = 300
 )
 

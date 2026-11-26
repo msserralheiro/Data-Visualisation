@@ -9,7 +9,6 @@ nypd <- as.data.frame(nypd)
 
 str(nypd)
 
-
 count(nypd, report_year)
 count(nypd, boro_nm, sort = TRUE)
 count(nypd, law_cat_cd)

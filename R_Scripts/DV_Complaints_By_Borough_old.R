@@ -50,7 +50,7 @@ off_bronx <- nypd |>
 
 off_bronx
 
-ggsave("Figures/Bronx_Most_Frequent_Reported_Offence_Types.png", off_bronx, width = 7, height = 5, dpi = 300)
+ggsave("Figures/EDA/Bronx_Most_Frequent_Reported_Offence_Types.png", off_bronx, width = 7, height = 5, dpi = 300)
 
 
 # Verify the most frequently reported offence types in Staten Island
@@ -70,4 +70,4 @@ off_staten_island <- nypd |>
 
 off_staten_island
 
-ggsave("Figures/Staten_Island_Most_Frequent_Reported_Offence_Types.png", off_staten_island, width = 7, height = 5, dpi = 300)
+ggsave("Figures/EDA/Staten_Island_Most_Frequent_Reported_Offence_Types.png", off_staten_island, width = 7, height = 5, dpi = 300)

@@ -5,7 +5,7 @@
 if (!exists("nypd")) source("R_Scripts/DV_Data_Loading.R")
 
 # Install once if needed:
-# install.packages(c("tigris", "sf", "stringi", "hexbin"))
+#install.packages(c("tigris", "sf", "stringi", "hexbin"))
 
 library(dplyr)
 library(ggplot2)
@@ -130,7 +130,7 @@ p_bronx_hex <- ggplot() +
   theme_map
 
 print(p_bronx_hex)
-ggsave("Figures/Street_Hex_Density_Bronx.png",
+ggsave("Figures/EDA/Street_Hex_Density_Bronx.png",
        p_bronx_hex, width = 10, height = 11, dpi = 300)
 
 
@@ -161,5 +161,5 @@ p_bronx_bar <- bronx_top_df |>
         plot.caption = element_text(hjust = 1))
 
 print(p_bronx_bar)
-ggsave("Figures/Street_Top10_Intersections_Bronx.png",
+ggsave("Figures/EDA/Street_Top10_Intersections_Bronx.png",
        p_bronx_bar, width = 10, height = 6, dpi = 300)
